@@ -1,0 +1,269 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="beAddAthletes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="family" Type="varchar" MaxLength="50" />
+          <Property Name="codeMelli" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="fatherName" Type="varchar" MaxLength="50" />
+          <Property Name="age" Type="int" />
+          <Property Name="date" Type="varchar" MaxLength="50" />
+          <Property Name="time" Type="varchar" MaxLength="50" />
+          <Property Name="phone" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="daily">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="family" Type="varchar" MaxLength="50" />
+          <Property Name="date" Type="varchar" MaxLength="50" />
+          <Property Name="cost" Type="int" />
+          <Property Name="timeIn" Type="varchar" MaxLength="50" />
+          <Property Name="timeOut" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="debtList">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="person" Type="int" />
+          <Property Name="debt" Type="bigint" />
+        </EntityType>
+        <EntityType Name="periodRegister">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="debt" Type="int" />
+          <Property Name="cash" Type="int" />
+          <Property Name="date" Type="varchar" MaxLength="50" />
+          <Property Name="time" Type="varchar" MaxLength="50" />
+          <Property Name="isCredit" Type="bit" />
+          <Property Name="expireDay" Type="varchar" MaxLength="50" />
+          <Property Name="person" Type="int" />
+          <Property Name="detail" Type="text" />
+        </EntityType>
+        <Association Name="FK_debtList_beAddAthletes">
+          <End Role="beAddAthletes" Type="Self.beAddAthletes" Multiplicity="0..1" />
+          <End Role="debtList" Type="Self.debtList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="beAddAthletes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="debtList">
+              <PropertyRef Name="person" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_periodRegister_beAddAthletes">
+          <End Role="beAddAthletes" Type="Self.beAddAthletes" Multiplicity="0..1" />
+          <End Role="periodRegister" Type="Self.periodRegister" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="beAddAthletes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="periodRegister">
+              <PropertyRef Name="person" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="beAddAthletes" EntityType="Self.beAddAthletes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="daily" EntityType="Self.daily" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="debtList" EntityType="Self.debtList" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="periodRegister" EntityType="Self.periodRegister" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_debtList_beAddAthletes" Association="Self.FK_debtList_beAddAthletes">
+            <End Role="beAddAthletes" EntitySet="beAddAthletes" />
+            <End Role="debtList" EntitySet="debtList" />
+          </AssociationSet>
+          <AssociationSet Name="FK_periodRegister_beAddAthletes" Association="Self.FK_periodRegister_beAddAthletes">
+            <End Role="beAddAthletes" EntitySet="beAddAthletes" />
+            <End Role="periodRegister" EntitySet="periodRegister" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="Entities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="beAddAthletes" EntityType="Model.beAddAthlete" />
+          <EntitySet Name="periodRegisters" EntityType="Model.periodRegister" />
+          <AssociationSet Name="FK_periodRegister_beAddAthletes" Association="Model.FK_periodRegister_beAddAthletes">
+            <End Role="beAddAthlete" EntitySet="beAddAthletes" />
+            <End Role="periodRegister" EntitySet="periodRegisters" />
+          </AssociationSet>
+          <EntitySet Name="dailies" EntityType="Model.daily" />
+          <EntitySet Name="debtLists" EntityType="Model.debtList" />
+          <AssociationSet Name="FK_debtList_beAddAthletes" Association="Model.FK_debtList_beAddAthletes">
+            <End Role="beAddAthlete" EntitySet="beAddAthletes" />
+            <End Role="debtList" EntitySet="debtLists" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="beAddAthlete">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="family" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="codeMelli" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="fatherName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="age" Type="Int32" />
+          <Property Name="date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="time" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="periodRegisters" Relationship="Model.FK_periodRegister_beAddAthletes" FromRole="beAddAthlete" ToRole="periodRegister" />
+          <NavigationProperty Name="debtLists" Relationship="Model.FK_debtList_beAddAthletes" FromRole="beAddAthlete" ToRole="debtList" />
+        </EntityType>
+        <EntityType Name="periodRegister">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="debt" Type="Int32" />
+          <Property Name="cash" Type="Int32" />
+          <Property Name="date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="time" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="isCredit" Type="Boolean" />
+          <Property Name="expireDay" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="person" Type="Int32" />
+          <NavigationProperty Name="beAddAthlete" Relationship="Model.FK_periodRegister_beAddAthletes" FromRole="periodRegister" ToRole="beAddAthlete" />
+          <Property Name="detail" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_periodRegister_beAddAthletes">
+          <End Type="Model.beAddAthlete" Role="beAddAthlete" Multiplicity="0..1" />
+          <End Type="Model.periodRegister" Role="periodRegister" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="beAddAthlete">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="periodRegister">
+              <PropertyRef Name="person" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="daily">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="family" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="cost" Type="Int32" />
+          <Property Name="timeIn" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="timeOut" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="debtList">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="person" Type="Int32" />
+          <Property Name="debt" Type="Int64" />
+          <NavigationProperty Name="beAddAthlete" Relationship="Model.FK_debtList_beAddAthletes" FromRole="debtList" ToRole="beAddAthlete" />
+        </EntityType>
+        <Association Name="FK_debtList_beAddAthletes">
+          <End Type="Model.beAddAthlete" Role="beAddAthlete" Multiplicity="0..1" />
+          <End Type="Model.debtList" Role="debtList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="beAddAthlete">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="debtList">
+              <PropertyRef Name="person" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities1">
+          <EntitySetMapping Name="beAddAthletes">
+            <EntityTypeMapping TypeName="Model.beAddAthlete">
+              <MappingFragment StoreEntitySet="beAddAthletes">
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="age" ColumnName="age" />
+                <ScalarProperty Name="fatherName" ColumnName="fatherName" />
+                <ScalarProperty Name="codeMelli" ColumnName="codeMelli" />
+                <ScalarProperty Name="family" ColumnName="family" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="periodRegisters">
+            <EntityTypeMapping TypeName="Model.periodRegister">
+              <MappingFragment StoreEntitySet="periodRegister">
+                <ScalarProperty Name="detail" ColumnName="detail" />
+                <ScalarProperty Name="person" ColumnName="person" />
+                <ScalarProperty Name="expireDay" ColumnName="expireDay" />
+                <ScalarProperty Name="isCredit" ColumnName="isCredit" />
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="cash" ColumnName="cash" />
+                <ScalarProperty Name="debt" ColumnName="debt" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="dailies">
+            <EntityTypeMapping TypeName="Model.daily">
+              <MappingFragment StoreEntitySet="daily">
+                <ScalarProperty Name="timeOut" ColumnName="timeOut" />
+                <ScalarProperty Name="timeIn" ColumnName="timeIn" />
+                <ScalarProperty Name="cost" ColumnName="cost" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="family" ColumnName="family" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="debtLists">
+            <EntityTypeMapping TypeName="Model.debtList">
+              <MappingFragment StoreEntitySet="debtList">
+                <ScalarProperty Name="debt" ColumnName="debt" />
+                <ScalarProperty Name="person" ColumnName="person" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
